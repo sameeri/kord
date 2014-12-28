@@ -58,11 +58,13 @@ var Polysynth = function(numVoices) {
     
     //update synth stereo width
     synth.updateWidth = function updateWidth() {
-        for (var i=0; i<numVoices; i++) {
-            var spread = 1/(numVoices-1);
-            var xPos = spread * i * synth.stereoWidth;
-            var zPos = 1 - Math.abs(xPos);
-            voices[i].pan.setPosition(xPos, 0, zPos);
+        if (numVoices > 1) { //width not applicable to monosynths
+            for (var i=0; i<numVoices; i++) {
+                var spread = 1/(numVoices-1);
+                var xPos = spread * i * synth.stereoWidth;
+                var zPos = 1 - Math.abs(xPos);
+                voices[i].pan.setPosition(xPos, 0, zPos);
+            }
         }
     }
 

@@ -16,6 +16,7 @@
             <div id="chordMenu">
                 <button ng-repeat="chord in labels" class="chord{{chord.number}}" swipe="{{chord.number}}">{{label(chord.number)}}</button>
             </div>
+            <button ng-click="startTest()">test</button>
         </div>
         <div id="settingsPanel" ng-show="showSettings">
             <ul id="ampSliders">
