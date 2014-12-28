@@ -10,5 +10,5 @@ app.get('/', function (req, res) {
 app.use(express.static(__dirname + '/'));
 
 http.listen(port, function() {
-    console.log('listening of port',port);
+    console.log('listening on port',port);
 });

@@ -14,7 +14,7 @@
                 <button ng-click="showSettings=!showSettings" class="settings">&#9881;</button>
             </div>
             <div id="chordMenu">
-                <button ng-repeat="chord in labels" class="chord{{chord.number}}" ng-mousedown="start(chord.number)" ng-mouseup="stop(chord.number)">{{label(chord.number)}}</button>
+                <button ng-repeat="chord in labels" class="chord{{chord.number}}" swipe="{{chord.number}}">{{label(chord.number)}}</button>
             </div>
         </div>
         <div id="settingsPanel" ng-show="showSettings">

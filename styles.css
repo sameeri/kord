@@ -12,9 +12,11 @@ main {
 
 button {
     border: none;
+    background: hsl(0, 0%, 75%);
     color: hsl(302, 10%, 99%);
     border-radius: 1vw;
     font-size: 1em;
+    -webkit-user-select: none; /* prevent tap-and-hold triggering highlight */
 }
 
 button:active {
@@ -155,8 +157,8 @@ button:active.settings.on {
 
 button.settings {
     font-size: 8vw;
-    width: 15vw;
-    height: 15vw;
+    width: 14.5vw;
+    height: 14.0625vw;
 }
 
 #waveformMenu {

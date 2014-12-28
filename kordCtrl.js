@@ -1,5 +1,25 @@
 var kordApp = angular.module('kordApp', ['ngTouch']);
 
+kordApp.directive('swipe', ['$swipe',
+    function($swipe) {
+        return {
+            restrict: 'EA',
+            link: function(scope, ele, attrs, ctrl) {
+                
+                var chordNumber = parseInt(attrs.swipe);
+                
+                $swipe.bind(ele, {
+                    'start': function(coords) {
+                        scope.start(chordNumber);
+                    },
+                    'end': function(coords) {
+                        scope.stop(chordNumber);
+                    }
+                });
+            }
+    }
+}]);
+
 kordApp.controller('kordCtrl', ['$scope',
     
     function kordCtrl($scope) {
@@ -19,7 +39,7 @@ kordApp.controller('kordCtrl', ['$scope',
             { number: 6, default: 'vi', invertMode: 'VI', specialChord: 'VII' + FLAT },
         ];
         
-        var lastChord = 1; //track last-pressed chord button
+        var lastChord = 0; //track last-pressed chord button
         
         //toggles
         $scope.invertMode = false;
@@ -151,7 +171,7 @@ kordApp.controller('kordCtrl', ['$scope',
                 case 3:
                     root += 4;
                     if (specialChord) {
-                        setChord(root+4); //VI flat; weird, i know, but this chord is just more useful
+                        setChord(root+4); //VI flat; weird, i know, but this chord is just more useful than, say, iii diminished
                     } else if (!invertMode) {
                         setChord(root, 'minor');
                     } else {
@@ -197,7 +217,7 @@ kordApp.controller('kordCtrl', ['$scope',
                 invert(chord);
             }
             
-            //trigger one note per oscillator
+            //apply each frequency to an oscillator
             for (var i=0, ii=chord.length; i<ii; i++) {
                 var key = chord[i] + ($scope.octave * 12);
                 polysynth.setPitch(i, getFreq(key));
