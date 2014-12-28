@@ -1,6 +1,7 @@
 body {
     font-family: Helvetica, sans-serif;
     line-height: 2vw;
+    zoom: 98.5%; /* cheat to fit everything into view; maybe fix later */
 }
 
 main {
