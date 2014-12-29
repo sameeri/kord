@@ -5,6 +5,7 @@ var Polysynth = function(numVoices) {
     var voices = []; //voice array
     var amp = audioCtx.createGain();
     var filter = audioCtx.createBiquadFilter();
+    var on = false; //iOS won't start audioContext timer until a user triggers an oscillator via the UI; use this variable to start the oscillators once upon synth.start
     
     amp.gain.value = 0;
     filter.type = 'lowpass';
@@ -39,7 +40,7 @@ var Polysynth = function(numVoices) {
         voices[i].pan.panningModel = 'equalpower';
         voices[i].osc.connect(voices[i].pan);
         voices[i].pan.connect(filter);
-        voices[i].osc.start(0);
+        //voices[i].osc.start(0);
     }
     
     function getNow() {
@@ -76,10 +77,22 @@ var Polysynth = function(numVoices) {
     
     //apply attack, decay, sustain envelope
     synth.start = function startSynth() {
+        
+        //because iOS sucks
+        if (!on) {
+            for (var i=0; i<numVoices; i++) {
+                voices[i].osc.start(0);
+            }
+            on = true;
+        }
+        
         var atk = parseFloat(synth.attack);
         var dec = parseFloat(synth.decay);
         var now = getNow();
         applyCutoff(now);
+        console.log('maxgain',synth.maxGain);
+        console.log('now',now);
+        console.log('atk',atk);
         amp.gain.linearRampToValueAtTime(synth.maxGain, now + atk);
         amp.gain.linearRampToValueAtTime(synth.sustain * synth.maxGain, now + atk + dec);
     }

@@ -11,17 +11,15 @@ kordApp.directive('swipe', ['$swipe',
                 //prevent iPhone from triggering twice (touch & click) and from zooming on double-tap
                 ele.bind('touchstart click', function(e) {
                     e.preventDefault();
-                    e.stopPropagation();
+                    //e.stopPropagation();
                 });
                 
                 $swipe.bind(ele, {
                     'start': function(coords) {
-                        console.log('start',chordNumber);
                         scope.start(chordNumber);
                         
                     },
                     'end': function(coords) {
-                        console.log('end',chordNumber);
                         scope.stop(chordNumber);
                     }
                 });
@@ -234,7 +232,6 @@ kordApp.controller('kordCtrl', ['$scope',
             }
             
             //apply attack gain envelope
-            console.log('starting synth (applying envelope)');
             polysynth.start();
         }
         
